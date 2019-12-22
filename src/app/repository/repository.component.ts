@@ -20,7 +20,8 @@ export class RepositoryComponent implements OnInit, OnDestroy {
   isLoading = false;
   username = '';
   repo = '';
-  commits = {};
+  commits: any[];
+  public isMenuCollapsed = true;
 
   constructor(
     private router: Router,
@@ -37,11 +38,6 @@ export class RepositoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.username
-    console.log('TCL: RepositoryComponent -> ngOnInit -> this.username', this.username);
-    // this.repo
-    console.log('TCL: RepositoryComponent -> ngOnInit -> this.repo', this.repo);
-
     this.GithubService.getGithubRepo({ username: this.username, repo: this.repo })
       .pipe(
         finalize(() => {
@@ -49,11 +45,8 @@ export class RepositoryComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((commits: any) => {
-        console.log('TCL: RepositoryComponent -> ngOnInit -> commits', commits);
         this.commits = commits;
       });
-
-    console.log('TCL: RepositoryComponent -> ngOnInit -> this.commits', this.commits);
   }
 
   ngOnDestroy() {}
